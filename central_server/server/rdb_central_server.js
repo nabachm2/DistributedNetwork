@@ -34,7 +34,7 @@ RDBCentralServer.prototype._onMessage = function(connectionId, ws, message) {
             ws.send(JSON.stringify(senddata));
         }
     } else if (message.message_type === 'update') {
-        if (typeof this.states[connectionId] ==' undefined')
+        if (typeof this.states[connectionId] === 'undefined')
             return;
 
         if (message.revision > this.states[connectionId].revision) {
