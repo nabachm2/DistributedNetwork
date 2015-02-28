@@ -1,0 +1,49 @@
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<body>
+
+	<script type="text/javascript">
+		function doConnect() {
+			var front = document.getElementById("frontCanvas");
+			window.snake = new Snake("ws://104.131.63.164:8080", front);
+			window.snake.startClient();
+		}
+
+		$(document).keydown(function(e) {
+		    switch(e.which) {
+
+		        case 37: // left
+		        window.snake.setDirection(-1, 0);
+		        break;
+
+		        case 38: // up
+		        window.snake.setDirection(0, -1);
+		        break;
+
+		        case 39: // right
+		        window.snake.setDirection(1, 0);
+		        break;
+
+		        case 40: // down
+		        window.snake.setDirection(0, 1);
+		        break;
+
+		        default: return; // exit this handler for other keys
+		    }
+		    e.preventDefault();
+		});
+
+
+	</script>
+
+	<h1>Hi there</h1>
+	<input id="clickMe" type="button" value="clickme" onclick="doConnect();" />
+	<canvas id="frontCanvas" width="200" height="200" style="position: absolute; z-index: 1">
+	</canvas>
+</body>
+
+<script src="central_server/client/rdb_central_client.js"></script>
+<script src="central_server/client/rdb_central_node.js"></script>
+<script src="games/snake/snake_client.js"></script>
+
+</body>
