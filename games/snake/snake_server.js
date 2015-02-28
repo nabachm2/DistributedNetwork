@@ -102,6 +102,7 @@ SnakeServer.prototype._updateStates = function() {
         	} else if (state.killed < 0) {
         		this._server.updateState(key, { 'u': { killed: state.killed - 1 } });
         		if (state.killed == -50) {
+        			var ss = this._server.states.server;	
         			for (var x = 0;x < ss.size.width;x ++)
 						for (var y = 0;y < ss.size.height;y ++)
 							if (this._board[x][y] === key)
