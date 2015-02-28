@@ -82,7 +82,10 @@ RDBCentralServer.prototype.pushUpdate = function() {
 
     for (var key in this._connections_to_network) {
         if (this._connections_to_network.hasOwnProperty(key) && key !== 'server') {
-            this._connections_to_network[key].send(JSON.stringify({ message_type: 'update', states: this._dirty_states }));
+            try {
+                this._connections_to_network[key].send(
+                    JSON.stringify({ message_type: 'update', states: this._dirty_states }));
+            } catch (e) { }
         }
     }
     this._dirty_states = { };
