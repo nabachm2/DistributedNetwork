@@ -16,7 +16,7 @@ function RDBCentralServer(port_number, server_state) {
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
+        if (obj.hasOwnProperty(key)) size ++;
     }
     return size;
 };
@@ -28,15 +28,19 @@ RDBCentralServer.prototype._onMessage = function(connectionId, ws, message) {
             this._connections_to_network[connectionId] = ws;
             this.states[connectionId] = initial_state;
             this.states[connectionId].revision = 0;
-            this._dirty_states[connectionId] = { 'u' : initial_state };
+            this._dirty_states[connectionId] = { u: initial_state };
 
             var senddata = { message_type: 'accept', node_id: connectionId, states: this.states };
             ws.send(JSON.stringify(senddata));
         }
     } else if (message.message_type === 'update') {
+        if (typeof this.states[connectionId] ==' undefined')
+            return;
+
         if (message.revision > this.states[connectionId].revision) {
             if (typeof this.verifyupdate !== 'undefined')
-                if (!this.verifyupdate(message.data, this.states[connectionId].client_data)) return;
+                if (!this.verifyupdate(message.data, this.states[connectionId].client_data, connectionId)) 
+                    return;
 
             this.states[connectionId].revision = message.revision;
             this.states[connectionId].client_data = message.data;
@@ -46,7 +50,6 @@ RDBCentralServer.prototype._onMessage = function(connectionId, ws, message) {
 }
 
 RDBCentralServer.prototype.updateState = function(connectionId, state_change) {
-    console.log("hey");
     if (typeof this._dirty_states[connectionId] === 'undefined')
         this._dirty_states[connectionId] = { d : {}, u : {} };
     if (typeof this._dirty_states[connectionId].u === 'undefined')
@@ -65,7 +68,7 @@ RDBCentralServer.prototype.updateState = function(connectionId, state_change) {
         this._dirty_states[connectionId]['d'][attrib] = false;
     }
 
-    if (Object.size(this.states[connectionId]) === 0) 
+    if (Object.size(this.states[connectionId]) == 0) 
         delete this.states[connectionId];
 }
 

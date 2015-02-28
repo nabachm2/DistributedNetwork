@@ -72,6 +72,7 @@ Snake.prototype._redraw = function() {
 
 	for (var node_id in this._client.states) {
 		if (node_id === 'server') {
+			ctx.fillStyle = '#FFD800'
 			var pos = this._client.states[node_id]['-1'];
 			ctx.fillRect(pos.x * (CELL_SIZE + 1) + 1, pos.y * (CELL_SIZE + 1) + 1, CELL_SIZE, CELL_SIZE);
 			continue;
@@ -84,24 +85,4 @@ Snake.prototype._redraw = function() {
 			ctx.fillRect(pos.x * (CELL_SIZE + 1) + 1, pos.y * (CELL_SIZE + 1) + 1, CELL_SIZE, CELL_SIZE);
 		}
 	}
-}
-
-function ColorLuminance(hex, lum) {
-
-	// validate hex string
-	hex = String(hex).replace(/[^0-9a-f]/gi, '');
-	if (hex.length < 6) {
-		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-	}
-	lum = lum || 0;
-
-	// convert to decimal and change luminosity
-	var rgb = "#", c, i;
-	for (i = 0; i < 3; i++) {
-		c = parseInt(hex.substr(i*2,2), 16);
-		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-		rgb += ("00"+c).substr(c.length);
-	}
-
-	return rgb;
 }
