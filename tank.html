@@ -1,0 +1,21 @@
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<body>
+
+	<script type="text/javascript">
+			window.tank = new Tank("ws://104.131.63.164:8080", 500, 500);
+			window.tank.startClient();
+		}
+
+
+	</script>
+
+	<input id="clickMe" type="button" value="clickme" onclick="doConnect();" />
+</body>
+
+<script src="central_server/client/rdb_central_client.js"></script>
+<script src="central_server/client/rdb_central_node.js"></script>
+<script src="games/tank/tank_client.js"></script>
+<script src="js/three.min.js"></script>
+
+</body>

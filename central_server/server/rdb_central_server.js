@@ -110,7 +110,6 @@ RDBCentralServer.prototype.startServer = function() {
         }.bind(this), 5000);
 
         ws.on('close', function(message) {
-            console.log("CLOSING");
             this.onclose(my_connection_id);
             this._dirty_states[my_connection_id] = { u: {}, d: {} };
             this._dirty_states[my_connection_id]['d'] = this.states[my_connection_id];
