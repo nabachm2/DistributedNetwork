@@ -25,7 +25,13 @@ function SnakeServer(port) {
 											'-1': { x: 4, y: 4 }});
 	this._server.onrequest = function(data) { return this._handleOnRequest(data); }.bind(this);
 	this._server.onupdate = function() { };
-	this._server.onclose = function() { }
+	this._server.onclose = function(id) { 
+		var ss = this._server.states.server;	
+		for (var x = 0;x < ss.size.width;x ++)
+			for (var y = 0;y < ss.size.height;y ++) 
+				if (this._board[x][y] == id)
+					this._board[x][y] = 0;
+	}.bind(this);
 	this._server.verifyupdate = function(newdata, olddata, id) { 
 		var state = this._server.states[id];
 		var pos = state[state.start];
@@ -104,9 +110,11 @@ SnakeServer.prototype._updateStates = function() {
         		if (state.killed == -50) {
         			var ss = this._server.states.server;	
         			for (var x = 0;x < ss.size.width;x ++)
-						for (var y = 0;y < ss.size.height;y ++)
-							if (this._board[x][y] === key)
+						for (var y = 0;y < ss.size.height;y ++) {
+							if (this._board[x][y] == key)
 								this._board[x][y] = 0;
+						}
+
 
         			this._server.purgeState(key);
         		}

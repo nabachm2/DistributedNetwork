@@ -5,7 +5,7 @@ module.exports = RDBCentralServer;
 
 function RDBCentralServer(port_number, server_state) {
     this._port = port_number;
-    this._connection_id = 1;
+    this._connection_id = 5;
 
     this._dirty_states = { };
     this.states = { 'server' : server_state };
